@@ -13,12 +13,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/','App\Http\Controllers\Site\HomeController@index');
+Route::get('/', 'App\Http\Controllers\Site\HomeController@index');
 
- Route::prefix('painel')->group(function(){
-    Route::get('/', 'App\Http\Controllers\Admin\HomeController@index')->name('admin');
-    Route::get('login','App\Http\Controllers\Admin\Auth\LoginController@index')->name('login');
- });
+Route::prefix('painel')->group(function () {
+   Route::get('/', 'App\Http\Controllers\Admin\HomeController@index')->name('admin');
+
+   Route::get('login', 'App\Http\Controllers\Admin\Auth\LoginController@index')->name('login');
+   Route::post('login', 'App\Http\Controllers\Admin\Auth\LoginController@authenticate');
+
+   Route::get('register', 'App\Http\Controllers\Admin\Auth\RegisterController@index')->name('register');
+   Route::post('register', 'App\Http\Controllers\Admin\Auth\RegisterController@register');
+});
 
 
 

@@ -11,10 +11,10 @@
 @endsection
 
 @section('css')
-    Aqui fica tudo referente a CSS
+    {{-- Aqui fica tudo referente a CSS --}}
 @endsection
 
 @section('js')
-    Aqui fica tudo referente a Javascript
+    {{-- Aqui fica tudo referente a Javascript --}}
 @endsection
 
