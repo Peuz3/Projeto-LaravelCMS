@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User as ModelsUser;
 use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Foundation\Auth\User as AuthUser;
 
 class UserController extends Controller
 {
@@ -14,7 +17,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('admin.users.index');
+        $users = User::all();
+
+        return view('admin.users.index',[
+            'users' => $users
+        ]);
     }
 
     /**
