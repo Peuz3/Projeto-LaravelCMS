@@ -90,7 +90,17 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        if($user)
+        {
+            return view('admin.users.edit',[
+                'user'=> $user
+            ]);
+
+        }
+
+        return view('admin.users.index');
+        
     }
 
     /**
@@ -102,7 +112,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        echo "DADOS RECEBIDOS!";
     }
 
     /**
