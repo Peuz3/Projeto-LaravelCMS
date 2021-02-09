@@ -10,13 +10,26 @@
 
 @section('content')
 
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <h4>Ocorreu um erro</h4>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{$error}}</li>
+                @endforeach
+            </ul>
+        </div>
+        
+    @endif
 
-    <form action="{{}}" method="post" class="form-horizontal">
+
+    <form action="{{route('users.store')}}" method="post" class="form-horizontal">
+        @csrf
         <div class="form-group">
             <div class="row">
                 <label class="col-sm-2 control-label">Nome Completo</label>
                 <div class="col-sm-10">
-                    <input type="text" name="name" class="form-control" />
+                    <input type="text" name="name" value="{{old('name')}}"class="form-control" />
                 </div>
             </div>
         </div>
@@ -24,7 +37,7 @@
             <div class="row">
                 <label class="col-sm-2 control-label">E-mail</label>
                 <div class="col-sm-10">
-                    <input type="email" name="email" class="form-control" />
+                    <input type="email" name="email" value="{{old('email')}}" class="form-control" />
                 </div>
             </div>
         </div>
@@ -40,7 +53,7 @@
             <div class="row">
                 <label class="col-sm-2 control-label">Confirmação da Senha</label>
                 <div class="col-sm-10">
-                    <input type="password" name="password-confirmation" class="form-control" />
+                    <input type="password" name="password_confirmation" class="form-control" />
                 </div>
             </div>
         </div>
