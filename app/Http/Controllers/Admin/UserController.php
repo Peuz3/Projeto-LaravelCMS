@@ -91,16 +91,13 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        if($user)
-        {
-            return view('admin.users.edit',[
-                'user'=> $user
+        if ($user) {
+            return view('admin.users.edit', [
+                'user' => $user
             ]);
-
         }
 
-        return view('admin.users.index');
-        
+        return redirect()->route('users.index');
     }
 
     /**
@@ -112,7 +109,76 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        echo "DADOS RECEBIDOS!";
+        $user = User::find($id);
+        //Verifica se o usuário existe
+        if ($user) {
+            $data = $request->only([
+                'name',
+                'email',
+                'password',
+                'password_confirmation'
+            ]);
+            $validator = Validator::make([
+                'name' => $data['name'],
+                'email' => $data['email']
+            ], [
+                'name' => ['required', 'string', 'max:100'],
+                'email' => ['required', 'string', 'email', 'max:200']
+            ]);
+
+            //Altera o nome
+            $user->name = $data['name'];
+
+            //Verifica se o novo e-mail existe
+            if ($user->email != $data['email']) {
+                $hasEmail = User::where('email', $data['email'])->get();
+                if (count($hasEmail) === 0) 
+                {
+                    $user->email = $data['email'];
+                } else
+                {
+                    $validator->errors()->add('email',__('validation.unique',[
+                        'attribute' => 'email'
+                    ]));
+                }
+            }
+
+            //Verifica se o usuário digitou senha para alterar
+            if (!empty($data['password'])) {
+                if (strlen($data['password']) >= 4) 
+                {
+                    if ($data['password'] === $data['password_confirmation']) 
+                    {
+                        $user->password = Hash::make($data['password']);
+                    }
+                    else
+                    {
+                        $validator->errors()->add('password',__('validation.confirmed',[
+                            'attribute' => 'password'
+                        ]));
+                    }
+                }
+                else
+                {
+                    $validator->errors()->add('password',__('validation.min.string',[
+                        'attribute' => 'password',
+                        'min' => 4
+                    ]));
+                }
+            }
+
+            //Verificação 
+            if(count($validator->errors()) > 0)
+            {
+                return redirect()->route('users.edit', [
+                    'user' => $id
+                ])->withErrors($validator);
+            }
+
+            $user->save();
+        } //Fim do if usuário
+
+        return redirect()->route('users.index');
     }
 
     /**
