@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -20,9 +25,11 @@ class UserController extends Controller
     public function index()
     {
         $users = User::paginate(5); //Paginação de até 5 
+        $loggedId = intval(Auth::id());
 
         return view('admin.users.index', [
-            'users' => $users
+            'users' => $users,
+            'loggedId' => $loggedId
         ]);
     }
 
