@@ -15,6 +15,7 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('can:edit-users');
     }
     
     /**
@@ -60,7 +61,7 @@ class UserController extends Controller
 
         $validator = Validator::make($data, [
             'name' => ['required', 'string', 'max:100'],
-            'email' => ['required', 'email', 'max:200', 'unique:users'],
+            'email' => ['required', 'email', 'max:100', 'unique:users'],
             'password' => ['required', 'string', 'min:4', 'confirmed']
         ]);
 
@@ -131,7 +132,7 @@ class UserController extends Controller
                 'email' => $data['email']
             ], [
                 'name' => ['required', 'string', 'max:100'],
-                'email' => ['required', 'string', 'email', 'max:200']
+                'email' => ['required', 'string', 'email', 'max:100']
             ]);
 
             //Altera o nome
