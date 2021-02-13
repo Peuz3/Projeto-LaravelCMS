@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use App\Models\Setting;
 
 class SettingController extends Controller
@@ -28,5 +29,36 @@ class SettingController extends Controller
        return view('admin.settings.index',[
            'settings' => $settings
        ]);
+    }
+
+    public function save(Request $request)
+    {
+        $data = $request->only([
+            'title',
+            'subtitle', 
+            'email', 
+            'bgcolor', 
+            'textcolor'
+        ]);
+
+        $validator = $this->validador($data);
+
+        if($validator->fails())
+        {
+            return redirect()->route('settings')
+                    ->withErrors($validator);
+                  
+        }
+    }
+
+    protected function validador($data)
+    {
+        return Validator::make($data,[
+            'title' => ['string', 'max:100'],
+            'subtitle' => ['string', 'max:100'],
+            'email' => ['string', 'email'],
+            'bgcolor' => ['string', 'regex:/#[A-Z0-9]{6}/i'],
+            'textcolor' => ['string', 'regex:/#[A-Z0-9]{6}/i'],
+        ]);
     }
 }
