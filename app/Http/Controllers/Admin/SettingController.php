@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Setting;
+use Hamcrest\Core\Set;
 
 class SettingController extends Controller
 {
@@ -20,40 +21,47 @@ class SettingController extends Controller
 
         $dbSettings = Setting::get();
 
-        foreach($dbSettings as $dbSetting)
-        {
-            $settings [$dbSetting['name'] ] = $dbSetting['content'];
+        foreach ($dbSettings as $dbSetting) {
+            $settings[$dbSetting['name']] = $dbSetting['content'];
         }
 
 
-       return view('admin.settings.index',[
-           'settings' => $settings
-       ]);
+        return view('admin.settings.index', [
+            'settings' => $settings
+        ]);
     }
 
     public function save(Request $request)
     {
         $data = $request->only([
             'title',
-            'subtitle', 
-            'email', 
-            'bgcolor', 
+            'subtitle',
+            'email',
+            'bgcolor',
             'textcolor'
         ]);
 
         $validator = $this->validador($data);
 
-        if($validator->fails())
-        {
+        if ($validator->fails()) {
             return redirect()->route('settings')
-                    ->withErrors($validator);
-                  
+                ->withErrors($validator);
         }
+
+        foreach ($data as $item => $value)
+        {
+            Setting::where('name', $item)->update([
+                'content' => $value
+            ]);
+        }
+
+        return redirect()->route('settings')
+                ->with('warning', 'Informações Alteradas com Sucesso!');
     }
 
     protected function validador($data)
     {
-        return Validator::make($data,[
+        return Validator::make($data, [
             'title' => ['string', 'max:100'],
             'subtitle' => ['string', 'max:100'],
             'email' => ['string', 'email'],
