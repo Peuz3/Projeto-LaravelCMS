@@ -62,7 +62,7 @@
                     <div class="col-sm-10">
                         <input type="submit" value="Cadastrar" class="btn btn-success"/>
                     </div>            
-            </div> <!--FIM DA DIV CONFIRMAR SENHA -->
+            </div> 
         
 
         </form>    
