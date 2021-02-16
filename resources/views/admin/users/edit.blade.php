@@ -63,11 +63,8 @@
                     <div class="col-sm-10">
                         <input type="submit" value="Salvar" class="btn btn-success"/>
                     </div>            
-            </div> <!--FIM DA DIV CONFIRMAR SENHA -->
-        
-
+            </div> 
         </form>    
     </div>
-</div> 
-    
+</div>     
 @endsection
