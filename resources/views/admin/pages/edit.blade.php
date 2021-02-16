@@ -63,7 +63,7 @@
         plugins:['link', 'table', 'image', 'autoresize', 'lists'],
         toolbar:'undo redo | formatselect | bold italic backcolor | alignleft  aligncenter  alignjustify  alignright | table | link image | bullist numlist',
         content_css:[
-            '{{assets('public/assets/css/content.css')}}'
+            '{{asset('public/assets/css/content.css')}}'
         ]
     });
 </script>
