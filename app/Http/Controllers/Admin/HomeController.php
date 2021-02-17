@@ -43,10 +43,13 @@ class HomeController extends Controller
         foreach($visitsAll as $visit)
         {
             $pagePie[$visit['page']] = intval($visit['countPage']);
+            //Gera cores aleatórias
+            $pagePieColors[] = 'rgba('.rand(0, 255).', '.rand(0, 255).', '.rand(0, 255).')';
         }
 
         $pageLabels = json_encode(array_keys($pagePie));
         $pageValues = json_encode(array_values($pagePie));
+        $pagePieColors = json_encode( array_values($pagePieColors));
 
         return view('admin.home',[
             'visitsCount' => $visitsCount,
@@ -54,7 +57,8 @@ class HomeController extends Controller
             'pageCount' => $pageCount,
             'userCount' => $userCount,
             'pageLabels' => $pageLabels,
-            'pageValues' => $pageValues
+            'pageValues' => $pageValues,
+            'pagePieColors' => $pagePieColors
         ]);
     }
 }

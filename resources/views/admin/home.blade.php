@@ -88,7 +88,7 @@
             data:{
                 datasets:[{
                     data:{{$pageValues}},
-                    backgroundColor:'#0000FF'
+                    backgroundColor:{!! $pagePieColors !!}
                 }],
                 labels:{!! $pageLabels !!}
             },
