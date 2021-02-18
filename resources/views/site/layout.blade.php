@@ -43,11 +43,11 @@
                         <div class="main-menu  d-none d-lg-block">
                             <nav>
                                 <ul id="navigation">
-                                    {{-- @foreach($front_menu as $menuslug => $menutitle)
+                                    @foreach($front_menu as $menuslug => $menutitle)
                                     <li>
                                         <a href="{{$menuslug}}">{{$menutitle}}</a>
                                     </li>
-                                    @endforeach --}}
+                                    @endforeach
                                 </ul>
                             </nav>
                         </div>
@@ -111,11 +111,11 @@
                                 Menu
                         </h3>
                         <ul>
-                            {{-- @foreach($front_menu as $menuslug => $menutitle)
+                            @foreach($front_menu as $menuslug => $menutitle)
                             <li>
                                 <a href="{{$menuslug}}">{{$menutitle}}</a>
                             </li>
-                            @endforeach --}}
+                            @endforeach
                         </ul>
 
                     </div>
